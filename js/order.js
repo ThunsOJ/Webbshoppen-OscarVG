@@ -6,20 +6,21 @@ import Customer from "./customer.js"; //laddar customer klassen
  * samt en total pris på vald produkt. Detta kan sedan bli en sumering
  * om man valt flera produkter
  */
+let products;
 
 if(window.localStorage.getItem("products")){
     console.log(localStorage);
     console.log("här är: " + JSON.parse(window.localStorage.getItem("products")).length);
     const order = document.querySelector('#orders');
     //metod som skriver ut html finns längst ned på denna sida
-    let products = JSON.parse(window.localStorage.getItem("products"));
+    products = JSON.parse(window.localStorage.getItem("products"));
     products.forEach(element => {
         order.innerHTML += printProductHTML(element);
     });
     let product = JSON.parse(window.localStorage.getItem("product"));
     
     addition(product);
-    subtraction(product);
+    //!!!subtraction(product);
     //remove knapp om man vill ta bort den valda produkten
     const remove = document.querySelector('#remove');
     const totalPrice = document.querySelector('#totprice');
@@ -33,7 +34,7 @@ if(window.localStorage.getItem("products")){
         e.preventDefault();
         order.innerHTML = null;
         totalPrice.innerHTML = null;
-        window.localStorage.removeItem("product");
+        window.localStorage.removeItem("products");
         remove.classList.add("hidden");
     })
 }
@@ -226,24 +227,45 @@ function printProductHTML(product){
             
 
             <div class="quantity">
-                <button id="addButton" >+</button>
-                <button id="subButton" >-</button>
+                <button id="add-${product.id}" >+</button>
+                <button id="sub-${product.id}" >-</button>
                 <p id="productQuantity">antal: ${product.quantity}</P>
             </div>
       `;
 }
 
 function addition(product){
-    let addButton = document.querySelector('#addButton');
+    let addButtons = [];
     let totprice = document.querySelector('#totprice');
-    addButton.addEventListener('click', e =>{
-        e.preventDefault();
-        product.quantity++;
-        let realCost = product.price * product.quantity;
-        let cost = Math.round((realCost + Number.EPSILON) * 100) / 100;
-        document.querySelector('#productQuantity').innerHTML = "antal: " + product.quantity;
-        totprice.innerHTML = `Total ${cost} €`;
-        localStorage.setItem('product', JSON.stringify(product));
+    console.log("Hej");
+
+    products.forEach(element => {
+        addButtons.push(document.querySelector('#add-'+element.id));
+    });
+
+    addButtons.forEach(bttn => {
+        console.log(bttn.id);
+        bttn.addEventListener('click', e =>{
+            e.preventDefault();
+            let str = bttn.id;
+            console.log(str);
+            let numbers = str.replace(/[^0-9]/g,"");
+            console.log("hej" + numbers);
+            let product = products.filter(e => e.id == numbers)[0];
+            console.log(product);
+            product.quantity++;
+            let realCost = product.price * product.quantity;
+            let cost = Math.round((realCost + Number.EPSILON) * 100) / 100;
+            document.querySelector('#productQuantity').innerHTML = "antal: " + product.quantity;
+            products.forEach(p =>{
+                if(p.id == product.id){
+                    p = product
+                    console.log(p)
+                }
+            });
+            totprice.innerHTML = `Total ${cost} €`;
+            localStorage.setItem('products', JSON.stringify(products));
+        })
     })
 }
 
@@ -251,6 +273,7 @@ function subtraction(product){
     let addButton = document.querySelector('#subButton');
     let order = document.querySelector('#orders');
     let totprice = document.querySelector('#totprice');
+
     addButton.addEventListener('click', e =>{
         e.preventDefault();
         product.quantity--;

@@ -10,6 +10,7 @@
     <script src="js/panels.js" type="module" defer></script>
     <script src="js/order.js" type="module" defer></script>
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Sen&display=swap");
       @import url("https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Allura&family=Dosis:wght@300&family=Karla:wght@300&family=Quicksand:wght@300&display=swap");
     </style>
   </head>
@@ -19,8 +20,9 @@
     <div id="panel"></div>
 
     <header>
-      <h1>Webbutik</h1>
+      <h1>KIMCHI STORE</h1>
       <hr />
+      <h2>Your local fake store</h2>
     </header>
 
     <div class="flex-containerbeställning">
@@ -35,15 +37,15 @@
             </legend>
             <div class="flex auto-margin gap-6px flex-col flex-wrap">
               <label for="name">Namn</label>
-              <input type="text" id="name" name="name" />
+              <input type="text" id="name" name="name" class="order-input" />
               <p id="name-ermsg" class="yellow">Obligatoriskt fält</p>
 
               <label for="email">E-mail</label>
-              <input type="email" id="email" name="email" />
+              <input type="email" id="email" name="email" class="order-input"/>
               <p id="email-ermsg" class="yellow">Obligatoriskt fält</p>
 
               <label for="tel">Telefon</label>
-              <input type="text" id="tel" name="tel" />
+              <input type="text" id="tel" name="tel" class="order-input"/>
               <p id="tel-ermsg" class="yellow">Obligatoriskt fält</p>
 
               <label for="address">Address</label>
@@ -58,7 +60,7 @@
                 </div>
                 <div class="flex flex-col width-50 gap-6px">
                   <label for="ort">Ort</label>
-                  <input type="text" id="ort" name="ort" />
+                  <input type="text" id="ort" name="ort" class="order-input"/>
                   <p id="ort-ermsg" class="yellow">Obligatoriskt fält</p>
                 </div>
               </div>
@@ -67,7 +69,7 @@
               Vilken produkt vill du beställa?
             </legend>
             <div id="orders" class="gap-16px"></div>
-            <div class="gap-16px">
+            <div class="gap-16px submission">
               <p id="totprice"></p>
               <button type="submit" class="hidden" id="submit">Submit</button>
               <button class="hidden" id="remove">Empty</button>

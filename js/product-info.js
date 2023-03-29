@@ -49,26 +49,24 @@ async function getProductById(id){
           data.price,
           data.category,
           data.description,
-          data.image
+          data.image,
+          1
         );
         //Skriver ut produkten i HTML taggar
         setHTMLValues(
-          product.imageURL,
-          product.title,
-          product.description,
-          product.price
+          product
         );
     })
     .catch((error) => console.error(error));
 }
 
 //Funktion för att sätta HTML värden
-function setHTMLValues(imageURL, title, description, price){
+function setHTMLValues(product){
 
-  document.querySelector('#singleProductImg').innerHTML = `<img src="${imageURL}" alt="${title}">`;
+  document.querySelector('#singleProductImg').innerHTML = `<img src="${product.imageURL}" alt="${product.title}">`;
   document.querySelector('#titleInfo').innerHTML = `
-      <h3 >${title}</h3>
-      <p class="singleProductDesc">${description}</p>
+      <h3 >${product.title}</h3>
+      <p class="singleProductDesc">${product.description}</p>
   `;
-  document.querySelector('#price').innerHTML = `<span>${price}€</span>`;
+  document.querySelector('#price').innerHTML = `<span>${product.price}€</span>`;
 }

@@ -7,8 +7,7 @@ if(!window.sessionStorage.getItem('customer')){
 } else {
     const customer = JSON.parse(window.sessionStorage.getItem('customer'));
     const product = JSON.parse(window.localStorage.getItem('product'));
-    const quantity = window.sessionStorage.getItem('quantity');
-    let realCost = product.price * parseFloat(quantity);
+    let realCost = product.price * parseFloat(product.quantity);
     const cost = Math.round((realCost + Number.EPSILON) * 100) / 100;
     document.querySelector("#address").innerHTML = `
         Varan väntas skickas till: ${customer.address} ${customer.zip} ${customer.county}
@@ -23,12 +22,11 @@ if(!window.sessionStorage.getItem('customer')){
         Telefon: ${customer.phone}
     `;
     document.querySelector("#title").innerHTML = `
-        Vara: ${product.title} x${quantity}
+        Vara: ${product.title} x${product.quantity}
     `;
     document.querySelector("#price").innerHTML = `
         Pris: ${cost} €
     `;
-    window.localStorage.removeItem('quantity');
     window.localStorage.removeItem('product');
     window.sessionStorage.removeItem('customer');
 }

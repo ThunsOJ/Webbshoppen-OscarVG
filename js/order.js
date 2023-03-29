@@ -1,7 +1,5 @@
 import Customer from "./customer.js"; //laddar customer klassen
 
-let quantity = 1;
-
 /**
  * om en produkt är vald kommer produktens
  * bild, titel och pris visas längst ned
@@ -11,17 +9,14 @@ let quantity = 1;
 if(window.localStorage.getItem("product")){
     const order = document.querySelector('#orders');
     //metod som skriver ut html finns längst ned på denna sida
-    order.innerHTML = printProductHTML(
-        JSON.parse(window.localStorage.getItem("product")).imageURL,
-        JSON.parse(window.localStorage.getItem("product")).title,
-        JSON.parse(window.localStorage.getItem("product")).price
-    );
-    addition(JSON.parse(window.localStorage.getItem("product")).price);
-    subtraction(JSON.parse(window.localStorage.getItem("product")).price);
+    let product = JSON.parse(window.localStorage.getItem("product"));
+    order.innerHTML = printProductHTML(product);
+    addition(product);
+    subtraction(product);
     //remove knapp om man vill ta bort den valda produkten
     const remove = document.querySelector('#remove');
     const totalPrice = document.querySelector('#totprice');
-    totalPrice.innerHTML = `Total ${JSON.parse(window.localStorage.getItem("product")).price} €`;
+    totalPrice.innerHTML = `Total ${product.price} €`;
     //remove knappen görs synlig
     remove.classList.remove("hidden");
     //Om knappen trycks tas info om produkten bort
@@ -82,7 +77,7 @@ submit.addEventListener('click', e =>{
             postnrInput.value,
             ortInput.value)
     ))
-    window.sessionStorage.setItem("quantity", quantity);
+    window.sessionStorage.setItem("product", product);
     window.document.location = "action-page.html";
 })
 
@@ -208,59 +203,61 @@ function submitField(){
     }
 }
 //Skriver ut produkten som HTML
-function printProductHTML(imageURL, title, price){
+function printProductHTML(product){
     return `
         <div class="cart">
 
             <div class="product-and-title">
                 <div class="product-img">
-                    <img src="${imageURL}" alt="${title}">
+                    <img src="${product.imageURL}" alt="${product.title}">
                 </div>
-                <h3>${title}</h3>
+                <h3>${product.title}</h3>
             </div>
 
             
-            <p class="action-price">${price} €</p>
+            <p class="action-price">${product.price} €</p>
             
 
             <div class="quantity">
                 <button id="addButton" >+</button>
                 <button id="subButton" >-</button>
-                <p id="productQuantity">antal: ${quantity}</P>
+                <p id="productQuantity">antal: ${product.quantity}</P>
             </div>
       `;
 }
 
-function addition(totalPrice){
+function addition(product){
     let addButton = document.querySelector('#addButton');
     let totprice = document.querySelector('#totprice');
     addButton.addEventListener('click', e =>{
         e.preventDefault();
-        quantity++;
-        let realCost = totalPrice * quantity;
+        product.quantity++;
+        let realCost = product.price * product.quantity;
         let cost = Math.round((realCost + Number.EPSILON) * 100) / 100;
-        document.querySelector('#productQuantity').innerHTML = "antal: " + quantity;
+        document.querySelector('#productQuantity').innerHTML = "antal: " + product.quantity;
         totprice.innerHTML = `Total ${cost} €`;
+        localStorage.setItem('product', JSON.stringify(product));
     })
 }
 
-function subtraction(totalPrice){
+function subtraction(product){
     let addButton = document.querySelector('#subButton');
     let order = document.querySelector('#orders');
     let totprice = document.querySelector('#totprice');
     addButton.addEventListener('click', e =>{
         e.preventDefault();
-        quantity--;
-        if(quantity <= 0){
+        product.quantity--;
+        if(product.quantity <= 0){
             order.innerHTML = null;
             totprice.innerHTML = null;
             window.localStorage.removeItem("product");
             document.querySelector('#remove').classList.add("hidden");
         }else{
-            let realCost = totalPrice * quantity;
+            let realCost = product.price * product.quantity;
             let cost = Math.round((realCost + Number.EPSILON) * 100) / 100;
-            document.querySelector('#productQuantity').innerHTML = "antal: " + quantity;
+            document.querySelector('#productQuantity').innerHTML = "antal: " + product.quantity;
             totprice.innerHTML = `Total ${cost} €`;
+            localStorage.setItem('product', JSON.stringify(product));
         }
     })
 }

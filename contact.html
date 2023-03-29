@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- responsivitet -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>Webbutik</title>
+    <!-- länk till stilmallen -->
+    <link href="css/stilmall.css" rel="Stylesheet" type="text/css" />
+    <script src="js/panels.js" type="module" defer></script>
+    <script src="js/contact.js" type="text/javascript" defer></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Allura&family=Dosis:wght@300&family=Karla:wght@300&display=swap");
+    </style>
+  </head>
+
+
+  <body>
+    <!-- navigeringsmeny som en lista -->
+    <div id="panel"></div>
+
+    <header>
+      <h1>KIMCHI STORE</h1>
+      <hr />
+      <h2>En låtsasbutik</h2>
+    </header>
+
+    <div class="flex-containerkontakt">
+      <h4>Kontakta oss här:</h4>
+      <div id="contact-form-div">
+        <!-- osynlig iframe för att stanna kvar på sidan när formuläret skickas -->
+        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+      <form id="contact-form"  action="contact-action-page.html" target="dummyframe">
+        <!-- label för att användaren ska kunna fylla i sina uppgifter-->
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="contact-input"
+          placeholder="Namn"
+          required = "required"
+          tabindex="21"
+        />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="contact-input"
+          placeholder="E-post"
+          required = "required"
+          tabindex="22"
+        />
+        <!-- här kan användaren skriva sitt meddelande -->
+        <textarea
+          id="message"
+          name="message"
+          class="contact-input-textarea"
+          placeholder="Skriv ditt meddelande"
+          required = "required"
+          tabindex="23"
+        ></textarea>
+
+
+      <!-- knapp för att skicka iväg meddelandet-->
+      <button
+              id="contact-submit"
+              tabindex="24"
+      >Skicka</button>
+      </form></div>
+
+      <!-- Bekräftelsemeddelande för skickat meddelande och knapp för nytt meddelande -->
+      <div id="sent-message-screen">
+        <p class="sent-message">Meddelande skickat</p>
+        <button class="sent-message" id="new-form">Nytt meddelande</button>
+      </div>
+
+    </div>
+
+    <!-- footer -->
+    <footer id="footer" class="footer"></footer>
+  </body>
+</html>

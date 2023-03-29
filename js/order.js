@@ -6,17 +6,24 @@ import Customer from "./customer.js"; //laddar customer klassen
  * samt en total pris på vald produkt. Detta kan sedan bli en sumering
  * om man valt flera produkter
  */
-if(window.localStorage.getItem("product")){
+
+if(window.localStorage.getItem("products")){
+    console.log(localStorage);
+    console.log("här är: " + JSON.parse(window.localStorage.getItem("products")).length);
     const order = document.querySelector('#orders');
     //metod som skriver ut html finns längst ned på denna sida
+    let products = JSON.parse(window.localStorage.getItem("products"));
+    products.forEach(element => {
+        order.innerHTML += printProductHTML(element);
+    });
     let product = JSON.parse(window.localStorage.getItem("product"));
-    order.innerHTML = printProductHTML(product);
+    
     addition(product);
     subtraction(product);
     //remove knapp om man vill ta bort den valda produkten
     const remove = document.querySelector('#remove');
     const totalPrice = document.querySelector('#totprice');
-    totalPrice.innerHTML = `Total ${product.price} €`;
+    //totalPrice.innerHTML = `Total ${product.price} €`;
     //remove knappen görs synlig
     remove.classList.remove("hidden");
     //Om knappen trycks tas info om produkten bort

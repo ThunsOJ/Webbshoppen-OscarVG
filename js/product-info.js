@@ -1,10 +1,16 @@
 import Product from "./product.js";
 
 //Variabel till taggen som visar produkten
-const productsContainer = document.querySelector(".singleProductContainer");
+console.log(localStorage);
 
 //Tom variabel för produkten
 let product;
+let products = [];
+
+if (window.localStorage.getItem("products")) {
+  products = JSON.parse(window.localStorage.getItem("products"));
+  console.log(JSON.parse(localStorage.getItem("products")));
+} 
 
 //Om användaren skriver in URLen när ingen produktvalts
 //Tas användaren tillbaka till index sidan
@@ -23,13 +29,8 @@ if (window.sessionStorage.getItem("productID") == null){
       e.preventDefault();
       //Om det redan finns en vald produkt
       //bytut gamla produkten mot nya
-      if(window.localStorage.getItem("product")){
-        window.localStorage.removeItem("product");
-        window.localStorage.setItem("product", JSON.stringify(product));
-        //ananrs lägg till produkten i localStorage
-      } else {
-        window.localStorage.setItem("product", JSON.stringify(product));
-      }
+      products.push(product);
+      window.localStorage.setItem("products", JSON.stringify(products));
       //Ta användaren till order sidan
       window.document.location = "order.html";
     })

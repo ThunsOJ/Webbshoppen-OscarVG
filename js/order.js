@@ -7,6 +7,7 @@ import Customer from "./customer.js"; //laddar customer klassen
  * om man valt flera produkter
  */
 let products;
+let cost = 0;
 
 if(window.localStorage.getItem("products")){
     console.log(localStorage);
@@ -16,6 +17,7 @@ if(window.localStorage.getItem("products")){
     products = JSON.parse(window.localStorage.getItem("products"));
     products.forEach(element => {
         order.innerHTML += printProductHTML(element);
+        cost += element.price;
     });
     let product = JSON.parse(window.localStorage.getItem("product"));
     
@@ -24,7 +26,7 @@ if(window.localStorage.getItem("products")){
     //remove knapp om man vill ta bort den valda produkten
     const remove = document.querySelector('#remove');
     const totalPrice = document.querySelector('#totprice');
-    //totalPrice.innerHTML = `Total ${product.price} €`;
+    totalPrice.innerHTML = `Total ${cost.toFixed(2)} €`;
     //remove knappen görs synlig
     remove.classList.remove("hidden");
     //Om knappen trycks tas info om produkten bort
@@ -234,44 +236,24 @@ function printProductHTML(product){
       `;
 }
 
-/*
-function addition(product){
-    let addButtons = [];
+function addition(){
+    let addButtons = document.getElementsByClassName("add");
     let totprice = document.querySelector('#totprice');
-    console.log("Hej");
 
-    products.forEach(element => {
-        addButtons.push(document.querySelector('#add-'+element.id));
-    });
-
-    addButtons.forEach(bttn => {
-        console.log(bttn.id);
-        bttn.addEventListener('click', e =>{
+    Array.prototype.forEach.call(addButtons, function(element, index) {
+        element.addEventListener('click', e =>{
             e.preventDefault();
-            let str = bttn.id;
-            console.log(str);
-            let numbers = str.replace(/[^0-9]/g,"");
-            console.log("hej" + numbers);
-            let product = products.filter(e => e.id == numbers)[0];
-            console.log(product);
-            product.quantity++;
-            let realCost = product.price * product.quantity;
-            let cost = Math.round((realCost + Number.EPSILON) * 100) / 100;
-            document.querySelector('#productQuantity').innerHTML = "antal: " + product.quantity;
-            products.forEach(p =>{
-                if(p.id == product.id){
-                    p = product
-                    console.log(p)
-                }
-            });
-            totprice.innerHTML = `Total ${cost} €`;
+            products[index].quantity++;
+            cost += products[index].price;
+            document.getElementsByClassName("productQuantity")[index].innerHTML = "antal: " + products[index].quantity;
+            totprice.innerHTML = `Total ${cost.toFixed(2)} €`;
             localStorage.setItem('products', JSON.stringify(products));
         })
-    })
+    });
 }
-*/
-function addition(product){
-    let addButtons = document.getElementsByClassName("add");
+
+function subtrac(){
+    let addButtons = document.getElementsByClassName("sub");
     let totprice = document.querySelector('#totprice');
 
     Array.prototype.forEach.call(addButtons, function(element, index) {

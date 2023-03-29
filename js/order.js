@@ -227,13 +227,14 @@ function printProductHTML(product){
             
 
             <div class="quantity">
-                <button id="add-${product.id}" >+</button>
-                <button id="sub-${product.id}" >-</button>
-                <p id="productQuantity">antal: ${product.quantity}</P>
+                <button class="add" >+</button>
+                <button class="sub" >-</button>
+                <p class="productQuantity">antal: ${product.quantity}</P>
             </div>
       `;
 }
 
+/*
 function addition(product){
     let addButtons = [];
     let totprice = document.querySelector('#totprice');
@@ -267,6 +268,23 @@ function addition(product){
             localStorage.setItem('products', JSON.stringify(products));
         })
     })
+}
+*/
+function addition(product){
+    let addButtons = document.getElementsByClassName("add");
+    let totprice = document.querySelector('#totprice');
+
+    Array.prototype.forEach.call(addButtons, function(element, index) {
+        element.addEventListener('click', e =>{
+            e.preventDefault();
+            products[index].quantity++;
+            let realCost = products[index].price * products[index].quantity;
+            let cost = Math.round((realCost + Number.EPSILON) * 100) / 100;
+            document.getElementsByClassName("productQuantity")[index].innerHTML = "antal: " + products[index].quantity;
+            totprice.innerHTML = `Total ${cost} €`;
+            localStorage.setItem('products', JSON.stringify(products));
+        })
+    });
 }
 
 function subtraction(product){

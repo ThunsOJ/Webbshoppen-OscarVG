@@ -22,7 +22,7 @@ if(window.localStorage.getItem("products")){
     let product = JSON.parse(window.localStorage.getItem("product"));
     
     addition(product);
-    //!!!subtraction(product);
+    subtraction(product);
     //remove knapp om man vill ta bort den valda produkten
     const remove = document.querySelector('#remove');
     const totalPrice = document.querySelector('#totprice');
@@ -252,42 +252,29 @@ function addition(){
     });
 }
 
-function subtrac(){
+function subtraction(){
     let addButtons = document.getElementsByClassName("sub");
     let totprice = document.querySelector('#totprice');
 
     Array.prototype.forEach.call(addButtons, function(element, index) {
         element.addEventListener('click', e =>{
             e.preventDefault();
-            products[index].quantity++;
-            let realCost = products[index].price * products[index].quantity;
-            let cost = Math.round((realCost + Number.EPSILON) * 100) / 100;
+            products[index].quantity--;
+            cost -= products[index].price;
             document.getElementsByClassName("productQuantity")[index].innerHTML = "antal: " + products[index].quantity;
-            totprice.innerHTML = `Total ${cost} €`;
-            localStorage.setItem('products', JSON.stringify(products));
+            totprice.innerHTML = `Total ${cost.toFixed(2)} €`;
+            if(products[index].quantity <= 0){
+                products.splice(index);
+                document.getElementsByClassName("cart")[index].innerHTML = null;
+                localStorage.setItem('products', JSON.stringify(products));
+            }else{
+                localStorage.setItem('products', JSON.stringify(products));
+            }
+            if(products.length == 0){
+                document.querySelector('#remove').classList.add("hidden");
+                totprice.innerHTML = null;
+                localStorage.removeItem('products');
+            }
         })
     });
-}
-
-function subtraction(product){
-    let addButton = document.querySelector('#subButton');
-    let order = document.querySelector('#orders');
-    let totprice = document.querySelector('#totprice');
-
-    addButton.addEventListener('click', e =>{
-        e.preventDefault();
-        product.quantity--;
-        if(product.quantity <= 0){
-            order.innerHTML = null;
-            totprice.innerHTML = null;
-            window.localStorage.removeItem("product");
-            document.querySelector('#remove').classList.add("hidden");
-        }else{
-            let realCost = product.price * product.quantity;
-            let cost = Math.round((realCost + Number.EPSILON) * 100) / 100;
-            document.querySelector('#productQuantity').innerHTML = "antal: " + product.quantity;
-            totprice.innerHTML = `Total ${cost} €`;
-            localStorage.setItem('product', JSON.stringify(product));
-        }
-    })
 }

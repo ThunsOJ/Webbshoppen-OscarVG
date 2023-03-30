@@ -299,9 +299,6 @@ function removeProduct(){
     Array.prototype.forEach.call(removeButtons, function(element, index) {
         element.addEventListener('click', e =>{
             e.preventDefault();
-            console.log(index)
-            console.log(products);
-            console.log(removeButtons);
             cost -= products[index].price * products[index].quantity;
             totprice.innerHTML = `Total ${cost.toFixed(2)}€`;      
             products.splice(index, 1);

@@ -9,7 +9,7 @@ let products = [];
 
 if (window.localStorage.getItem("products")) {
   products = JSON.parse(window.localStorage.getItem("products"));
-  console.log(JSON.parse(localStorage.getItem("products")));
+  
 } 
 
 //Om användaren skriver in URLen när ingen produktvalts
@@ -27,8 +27,7 @@ if (window.sessionStorage.getItem("productID") == null){
     const orderButton = document.querySelector("#ORDER");
     orderButton.addEventListener('click', (e) => {
       e.preventDefault();
-      //Om det redan finns en vald produkt
-      //bytut gamla produkten mot nya
+      
       products.push(product);
       window.localStorage.setItem("products", JSON.stringify(products));
       //Ta användaren till order sidan

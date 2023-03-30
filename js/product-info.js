@@ -32,7 +32,6 @@ if (window.sessionStorage.getItem("productID") == null){
         products.push(product);
         //Ökar annars quantity
       } else{
-        console.log("hej")
         products.forEach((element, index) => {
           if(element.id == product.id){
             products[index].quantity++;

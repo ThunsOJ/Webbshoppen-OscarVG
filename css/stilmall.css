@@ -610,7 +610,28 @@ input[type=text], input[type=email], select, textarea {
   align-items: center;
 }
 
-.quantity button{
+.delete{
+  width: 20px;
+  background-color: white;
+  border: none;
+  
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  margin-left: 10px;
+}
+.delete img{
+  width: 100%;
+}
+
+.add{
+  width: 20px;
+  background-color: white;
+  border: solid 1px;
+  margin: 0 2px 0 2px;
+  height: 20px;
+}
+.sub{
   width: 20px;
   background-color: white;
   border: solid 1px;
@@ -782,8 +803,14 @@ input[type=text], input[type=email], select, textarea {
   margin-bottom: 10px;
 }
 
+
+
 /*För mobil sida*/
 @media screen and (max-width: 660px) {
+
+  .header a {
+    font-size: 10px;
+  }
 
   h1 {
     font-size: 50px;

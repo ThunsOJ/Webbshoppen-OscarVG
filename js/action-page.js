@@ -8,9 +8,9 @@ if(!window.sessionStorage.getItem('customer')){
     const customer = JSON.parse(window.sessionStorage.getItem('customer'));
     const products = JSON.parse(window.localStorage.getItem('products'));
     let cost = 0;
-    for(let i=0; i<products.length; i++){
-     cost += products[i].price;
-    }
+    products.forEach(product => {
+        cost += product.price * product.quantity;
+    })
 
     document.querySelector("#address").innerHTML = `
         Varan väntas skickas till: ${customer.address} ${customer.zip} ${customer.county}

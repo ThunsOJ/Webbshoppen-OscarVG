@@ -10,23 +10,25 @@ let products;
 let cost = 0;
 
 if(window.localStorage.getItem("products")){
-    console.log(localStorage);
-    console.log("här är: " + JSON.parse(window.localStorage.getItem("products")).length);
     const order = document.querySelector('#orders');
+    let productPrice = document.getElementsByClassName("action-price");
     //metod som skriver ut html finns längst ned på denna sida
     products = JSON.parse(window.localStorage.getItem("products"));
-    products.forEach(element => {
+    products.forEach((element, index) => {
         order.innerHTML += printProductHTML(element);
         cost += element.price * element.quantity;
+        productPrice[index].innerHTML = `${(element.price * element.quantity).toFixed(2)}€`;
     });
-    let product = JSON.parse(window.localStorage.getItem("product"));
     
-    addition(product);
-    subtraction(product);
-    //remove knapp om man vill ta bort den valda produkten
+    addition();
+    subtraction();
+    removeProduct();
+    
+
+    //tar bort alla produkter
     const remove = document.querySelector('#remove');
     const totalPrice = document.querySelector('#totprice');
-    totalPrice.innerHTML = `Total ${cost.toFixed(2)} €`;
+    totalPrice.innerHTML = `Total ${cost.toFixed(2)}€`;
     //remove knappen görs synlig
     remove.classList.remove("hidden");
     //Om knappen trycks tas info om produkten bort
@@ -225,13 +227,14 @@ function printProductHTML(product){
             </div>
 
             
-            <p class="action-price">${product.price} €</p>
+            <p class="action-price"></p>
             
 
             <div class="quantity">
                 <button class="add" >+</button>
                 <button class="sub" >-</button>
                 <p class="productQuantity">antal: ${product.quantity}</P>
+                <button class="delete" ><img src="/images/garbage2.png" alt="🗑"></button>
             </div>
       `;
 }
@@ -239,6 +242,8 @@ function printProductHTML(product){
 function addition(){
     let addButtons = document.getElementsByClassName("add");
     let totprice = document.querySelector('#totprice');
+    let productPrice = document.getElementsByClassName("action-price");
+    let itemPrice = 0;
 
     Array.prototype.forEach.call(addButtons, function(element, index) {
         element.addEventListener('click', e =>{
@@ -246,7 +251,9 @@ function addition(){
             products[index].quantity++;
             cost += products[index].price;
             document.getElementsByClassName("productQuantity")[index].innerHTML = "antal: " + products[index].quantity;
-            totprice.innerHTML = `Total ${cost.toFixed(2)} €`;
+            totprice.innerHTML = `Total ${cost.toFixed(2)}€`;
+            itemPrice = products[index].price * products[index].quantity;
+            productPrice[index].innerHTML = `${itemPrice.toFixed(2)}€`
             localStorage.setItem('products', JSON.stringify(products));
         })
     });
@@ -255,6 +262,8 @@ function addition(){
 function subtraction(){
     let addButtons = document.getElementsByClassName("sub");
     let totprice = document.querySelector('#totprice');
+    let productPrice = document.getElementsByClassName("action-price");
+    let itemPrice = 0;
 
     Array.prototype.forEach.call(addButtons, function(element, index) {
         element.addEventListener('click', e =>{
@@ -262,11 +271,14 @@ function subtraction(){
             products[index].quantity--;
             cost -= products[index].price;
             document.getElementsByClassName("productQuantity")[index].innerHTML = "antal: " + products[index].quantity;
-            totprice.innerHTML = `Total ${cost.toFixed(2)} €`;
+            totprice.innerHTML = `Total ${cost.toFixed(2)}€`;
+            itemPrice = products[index].price * products[index].quantity;
+            productPrice[index].innerHTML = `${itemPrice.toFixed(2)}€`
             if(products[index].quantity <= 0){
                 products.splice(index, 1);
                 document.getElementsByClassName("cart")[index].remove();
                 localStorage.setItem('products', JSON.stringify(products));
+                location.reload();
             }else{
                 localStorage.setItem('products', JSON.stringify(products));
             }
@@ -274,7 +286,34 @@ function subtraction(){
                 document.querySelector('#remove').classList.add("hidden");
                 totprice.innerHTML = null;
                 localStorage.removeItem('products');
+                location.reload();
             }
+        })
+    });
+}
+
+function removeProduct(){
+    let removeButtons = document.getElementsByClassName("delete");
+    let totprice = document.querySelector('#totprice');
+
+    Array.prototype.forEach.call(removeButtons, function(element, index) {
+        element.addEventListener('click', e =>{
+            e.preventDefault();
+            console.log(index)
+            console.log(products);
+            console.log(removeButtons);
+            cost -= products[index].price * products[index].quantity;
+            totprice.innerHTML = `Total ${cost.toFixed(2)}€`;      
+            products.splice(index, 1);
+            document.getElementsByClassName("cart")[index].remove();
+            localStorage.setItem('products', JSON.stringify(products));
+
+            if(products.length == 0){
+                document.querySelector('#remove').classList.add("hidden");
+                totprice.innerHTML = null;
+                localStorage.removeItem('products');
+            }
+            location.reload();
         })
     });
 }

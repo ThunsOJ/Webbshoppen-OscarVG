@@ -208,7 +208,7 @@ function submitField(){
         correctTel &&
         correctAddress &&
         correctPostnr &&
-        correctOrt && window.localStorage.getItem("product")){
+        correctOrt && window.localStorage.getItem("products")){
         document.getElementById("submit").classList.remove('hidden');
     }
 }

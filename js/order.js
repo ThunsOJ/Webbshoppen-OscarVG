@@ -234,7 +234,7 @@ function printProductHTML(product){
                 <button class="add" >+</button>
                 <button class="sub" >-</button>
                 <p class="productQuantity">antal: ${product.quantity}</P>
-                <button class="delete" ><img src="/images/garbage2.png" alt="🗑"></button>
+                <button class="delete" ><img src="images/garbage2.png" alt="🗑"></button>
             </div>
       `;
 }

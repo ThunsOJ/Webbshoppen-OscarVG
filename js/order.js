@@ -264,8 +264,8 @@ function subtraction(){
             document.getElementsByClassName("productQuantity")[index].innerHTML = "antal: " + products[index].quantity;
             totprice.innerHTML = `Total ${cost.toFixed(2)} €`;
             if(products[index].quantity <= 0){
-                products.splice(index);
-                document.getElementsByClassName("cart")[index].innerHTML = null;
+                products.splice(index, 1);
+                document.getElementsByClassName("cart")[index].remove();
                 localStorage.setItem('products', JSON.stringify(products));
             }else{
                 localStorage.setItem('products', JSON.stringify(products));

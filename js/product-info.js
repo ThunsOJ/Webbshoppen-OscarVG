@@ -8,7 +8,6 @@ let products = [];
 
 if (window.localStorage.getItem("products")) {
   products = JSON.parse(window.localStorage.getItem("products"));
-  
 } 
 
 //Om användaren skriver in URLen när ingen produktvalts

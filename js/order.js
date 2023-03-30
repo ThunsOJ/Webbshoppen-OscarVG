@@ -17,7 +17,7 @@ if(window.localStorage.getItem("products")){
     products = JSON.parse(window.localStorage.getItem("products"));
     products.forEach(element => {
         order.innerHTML += printProductHTML(element);
-        cost += element.price;
+        cost += element.price * element.quantity;
     });
     let product = JSON.parse(window.localStorage.getItem("product"));
     

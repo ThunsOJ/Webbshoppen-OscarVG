@@ -27,9 +27,21 @@ if (window.sessionStorage.getItem("productID") == null){
     const orderButton = document.querySelector("#ORDER");
     orderButton.addEventListener('click', (e) => {
       e.preventDefault();
-      
-      products.push(product);
+      //Kollar så att produkten inte redan är tillagd
+      if(products.filter(p => p.id == product.id).length == 0){
+        products.push(product);
+        //Ökar annars quantity
+      } else{
+        console.log("hej")
+        products.forEach((element, index) => {
+          if(element.id == product.id){
+            products[index].quantity++;
+          }
+        })
+      }
+
       window.localStorage.setItem("products", JSON.stringify(products));
+      
       //Ta användaren till order sidan
       window.document.location = "order.html";
     })

@@ -26,7 +26,9 @@ if(!window.sessionStorage.getItem('customer')){
     `;
     products.forEach(element => {
         document.querySelector("#title").innerHTML += `
-        Vara: ${element.title} x${element.quantity}
+        <li class="vara">
+            ${element.title} x${element.quantity}
+        </li>
     `;
     });   
     document.querySelector("#price").innerHTML = `

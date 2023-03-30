@@ -13,16 +13,16 @@ function panel() {
     header.innerHTML = `
       <nav class="nav">
         <ul>
-          <li class="${path.includes("/kontakt.html") ? "active" : ""}">
+          <li class="header ${path.includes("/kontakt.html") ? "active" : ""}">
             <a href="kontakt.html">Contact us</a>
           </li>
-          <li class="${path.includes("/produkter.html") ? "active" : ""}">
+          <li class="header ${path.includes("/produkter.html") ? "active" : ""}">
             <a href="produkter.html">Products</a>
           </li>
-          <li class="${path.includes("/order.html") ? "active" : ""}">
+          <li class="header ${path.includes("/order.html") ? "active" : ""}">
             <a href="order.html">Order</a>
           </li>
-          <li class="${path.includes("/index.html") ? "active" : ""}">
+          <li class="header ${path.includes("/index.html") ? "active" : ""}">
             <a href="index.html">Startpage</a>
           </li>
         </ul>

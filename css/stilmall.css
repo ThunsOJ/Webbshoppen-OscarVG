@@ -430,12 +430,12 @@ font-weight: 700;
   /*float: right;*/
 }
 
-li {
+.header {
   float: right; /* listan ska vara horistontell åt vänster */
   width: 25%; /* varje knapp i menyn får 25% vardera */
 }
 
-li a {
+.header a {
   display: block; 
   color: white;
   text-align: center;
@@ -444,14 +444,14 @@ li a {
   font-family: 'Karla', sans-serif;
 }
 
-li a:hover {
+.header a:hover {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 350ms;
   background-color: #000000; 
 }
 
-li a:hover:not(.active) {
+.header a:hover:not(.active) {
  background: rgba(120, 179, 255, 0.4); /* genomskinlig navigeringsmeny - kontakt*/
 }
   .active {
@@ -462,7 +462,7 @@ li a:hover:not(.active) {
   background: rgba(120, 179, 255, 0.4); /* när man hovrar över */
 }
 
-.nav li.active a {
+.nav .header.active a {
   background: rgb(120, 179, 255, 0.4); 
 }
 
@@ -770,6 +770,18 @@ input[type=text], input[type=email], select, textarea {
   padding: 20px;
 }
 
+.ordertext ul{
+  margin-top: 10px;
+}
+
+.vara{
+  list-style-position: inside;
+  list-style-type:square;
+  font-size: small;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
 /*För mobil sida*/
 @media screen and (max-width: 660px) {
 
@@ -851,7 +863,5 @@ input[type=text], input[type=email], select, textarea {
     margin-left: 10%;
     margin-right: 10%;
   }
-
-
    
 }  

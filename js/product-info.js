@@ -32,9 +32,9 @@ if (window.sessionStorage.getItem("productID") == null){
         products.push(product);
         //Ökar annars quantity
       } else{
-        products.forEach((element, index) => {
+        products.forEach((element) => {
           if(element.id == product.id){
-            products[index].quantity++;
+            element.quantity++;
           }
         })
       }

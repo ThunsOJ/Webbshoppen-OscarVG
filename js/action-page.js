@@ -6,9 +6,12 @@ if(!window.sessionStorage.getItem('customer')){
 //Annars skriver vi ut varan och beställer med bekräftelse att användaren har köp något
 } else {
     const customer = JSON.parse(window.sessionStorage.getItem('customer'));
-    const product = JSON.parse(window.localStorage.getItem('product'));
-    let realCost = product.price * parseFloat(product.quantity);
-    const cost = Math.round((realCost + Number.EPSILON) * 100) / 100;
+    const products = JSON.parse(window.localStorage.getItem('products'));
+    let cost = 0;
+    for(let i=0; i<products.length; i++){
+     cost += products[i].price;
+    }
+
     document.querySelector("#address").innerHTML = `
         Varan väntas skickas till: ${customer.address} ${customer.zip} ${customer.county}
     `;
@@ -21,12 +24,14 @@ if(!window.sessionStorage.getItem('customer')){
     document.querySelector("#phone").innerHTML = `
         Telefon: ${customer.phone}
     `;
-    document.querySelector("#title").innerHTML = `
-        Vara: ${product.title} x${product.quantity}
+    products.forEach(element => {
+        document.querySelector("#title").innerHTML += `
+        Vara: ${element.title} x${element.quantity}
     `;
+    });   
     document.querySelector("#price").innerHTML = `
-        Pris: ${cost} €
+        Pris: $ cost.toFixed(2)}€
     `;
-    window.localStorage.removeItem('product');
+    window.localStorage.removeItem('products');
     window.sessionStorage.removeItem('customer');
 }

@@ -357,8 +357,7 @@ font-weight: 700;
 }
 
 .product-header{
-  display: flex;
-  justify-content: center;
+  
   aspect-ratio: 16/9;
   overflow: hidden;
 }
@@ -368,6 +367,9 @@ font-weight: 700;
 }
   
 .product-header img {
+  margin-left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
   max-width: 100%;
   padding: 10px;
 }
@@ -813,7 +815,11 @@ input[type=text], input[type=email], select, textarea {
   }
 
   h1 {
-    font-size: 50px;
+    font-size: 40px;
+  }
+
+  #categoryhead{
+    font-size: 15px;
   }
 
   .mainsection{

@@ -1,7 +1,6 @@
 import Product from "./product.js";
 
-//Variabel till taggen som visar produkten
-console.log(localStorage);
+
 
 //Tom variabel för produkten
 let product;

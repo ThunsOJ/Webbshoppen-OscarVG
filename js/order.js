@@ -278,17 +278,20 @@ function subtraction(){
             productPrice[index].innerHTML = `${itemPrice.toFixed(2)}€`
             if(products[index].quantity <= 0){
                 products.splice(index, 1);
-                localStorage.setItem('products', JSON.stringify(products));
-                start();
+                if(products.length == 0){
+                    document.getElementsByClassName("cart")[index].remove();
+                    document.querySelector('#remove').classList.add("hidden");
+                    document.getElementById("submit").classList.add('hidden');
+                    totprice.innerHTML = null;
+                    
+                    localStorage.removeItem('products');
+                } else{
+                    localStorage.setItem('products', JSON.stringify(products));
+                    start();
+                }
+                
             }else{
                 localStorage.setItem('products', JSON.stringify(products));
-            }
-            if(products.length == 0){
-                document.getElementsByClassName("cart")[index].remove();
-                document.querySelector('#remove').classList.add("hidden");
-                totprice.innerHTML = null;
-                document.getElementById("submit").classList.add('hidden');
-                localStorage.removeItem('products');
             }
         });
     });

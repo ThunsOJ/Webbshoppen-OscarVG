@@ -8,10 +8,20 @@ import Customer from "./customer.js"; //laddar customer klassen
  */
 let products;
 let cost = 0;
+let productPrice = document.getElementsByClassName("action-price");
+let totprice = document.querySelector('#totprice');
 
 if(window.localStorage.getItem("products")){
+    
+    start();
+
+    
+}
+
+function start(){
+    cost = 0;
     const order = document.querySelector('#orders');
-    let productPrice = document.getElementsByClassName("action-price");
+    order.innerHTML = null;
     //metod som skriver ut html finns längst ned på denna sida
     products = JSON.parse(window.localStorage.getItem("products"));
     products.forEach((element, index) => {
@@ -23,8 +33,6 @@ if(window.localStorage.getItem("products")){
     addition();
     subtraction();
     removeProduct();
-    
-
     //tar bort alla produkter
     const remove = document.querySelector('#remove');
     const totalPrice = document.querySelector('#totprice');
@@ -89,6 +97,7 @@ submit.addEventListener('click', e =>{
             postnrInput.value,
             ortInput.value)
     ))
+    window.sessionStorage.setItem("products", products);
     window.document.location = "action-page.html";
 })
 
@@ -240,8 +249,6 @@ function printProductHTML(product){
 
 function addition(){
     let addButtons = document.getElementsByClassName("add");
-    let totprice = document.querySelector('#totprice');
-    let productPrice = document.getElementsByClassName("action-price");
     let itemPrice = 0;
 
     Array.prototype.forEach.call(addButtons, function(element, index) {
@@ -260,8 +267,6 @@ function addition(){
 
 function subtraction(){
     let addButtons = document.getElementsByClassName("sub");
-    let totprice = document.querySelector('#totprice');
-    let productPrice = document.getElementsByClassName("action-price");
     let itemPrice = 0;
 
     Array.prototype.forEach.call(addButtons, function(element, index) {
@@ -275,41 +280,39 @@ function subtraction(){
             productPrice[index].innerHTML = `${itemPrice.toFixed(2)}€`
             if(products[index].quantity <= 0){
                 products.splice(index, 1);
-                document.getElementsByClassName("cart")[index].remove();
                 localStorage.setItem('products', JSON.stringify(products));
-                location.reload();
+                start();
             }else{
                 localStorage.setItem('products', JSON.stringify(products));
             }
             if(products.length == 0){
+                document.getElementsByClassName("cart")[index].remove();
                 document.querySelector('#remove').classList.add("hidden");
                 totprice.innerHTML = null;
                 localStorage.removeItem('products');
-                location.reload();
             }
-        })
+        });
     });
 }
 
 function removeProduct(){
     let removeButtons = document.getElementsByClassName("delete");
-    let totprice = document.querySelector('#totprice');
-
+  
     Array.prototype.forEach.call(removeButtons, function(element, index) {
         element.addEventListener('click', e =>{
             e.preventDefault();
             cost -= products[index].price * products[index].quantity;
             totprice.innerHTML = `Total ${cost.toFixed(2)}€`;      
             products.splice(index, 1);
-            document.getElementsByClassName("cart")[index].remove();
             localStorage.setItem('products', JSON.stringify(products));
-
             if(products.length == 0){
+                document.getElementsByClassName("cart")[index].remove();
                 document.querySelector('#remove').classList.add("hidden");
                 totprice.innerHTML = null;
                 localStorage.removeItem('products');
-            }
-            location.reload();
+            } else{
+                start();
+            }     
         })
     });
 }

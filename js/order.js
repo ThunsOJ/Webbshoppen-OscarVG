@@ -12,10 +12,7 @@ let productPrice = document.getElementsByClassName("action-price");
 let totprice = document.querySelector('#totprice');
 
 if(window.localStorage.getItem("products")){
-    
-    start();
-
-    
+    start(); 
 }
 
 function start(){

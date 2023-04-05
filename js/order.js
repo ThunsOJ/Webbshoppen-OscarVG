@@ -288,8 +288,7 @@ function subtraction(){
                 } else{
                     localStorage.setItem('products', JSON.stringify(products));
                     start();
-                }
-                
+                }    
             }else{
                 localStorage.setItem('products', JSON.stringify(products));
             }
@@ -310,8 +309,8 @@ function removeProduct(){
             if(products.length == 0){
                 document.getElementsByClassName("cart")[index].remove();
                 document.querySelector('#remove').classList.add("hidden");
-                totprice.innerHTML = null;
                 document.getElementById("submit").classList.add('hidden');
+                totprice.innerHTML = null;
                 localStorage.removeItem('products');
             } else{
                 start();

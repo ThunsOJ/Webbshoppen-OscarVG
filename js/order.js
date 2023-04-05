@@ -10,26 +10,12 @@ let products;
 let cost = 0;
 let productPrice = document.getElementsByClassName("action-price");
 let totprice = document.querySelector('#totprice');
+const order = document.querySelector('#orders');
 
 if(window.localStorage.getItem("products")){
-    start(); 
-}
-
-function start(){
-    cost = 0;
-    const order = document.querySelector('#orders');
-    order.innerHTML = null;
-    //metod som skriver ut html finns längst ned på denna sida
-    products = JSON.parse(window.localStorage.getItem("products"));
-    products.forEach((element, index) => {
-        order.innerHTML += printProductHTML(element);
-        cost += element.price * element.quantity;
-        productPrice[index].innerHTML = `${(element.price * element.quantity).toFixed(2)}€`;
-    });
     
-    addition();
-    subtraction();
-    removeProduct();
+    start();
+
     //tar bort alla produkter
     const remove = document.querySelector('#remove');
     const totalPrice = document.querySelector('#totprice');
@@ -46,6 +32,22 @@ function start(){
         window.localStorage.removeItem("products");
         remove.classList.add("hidden");
     })
+}
+
+function start(){
+    cost = 0;
+    order.innerHTML = null;
+    //metod som skriver ut html finns längst ned på denna sida
+    products = JSON.parse(window.localStorage.getItem("products"));
+    products.forEach((element, index) => {
+        order.innerHTML += printProductHTML(element);
+        cost += element.price * element.quantity;
+        productPrice[index].innerHTML = `${(element.price * element.quantity).toFixed(2)}€`;
+    });
+    
+    addition();
+    subtraction();
+    removeProduct();
 }
 
 //Gör submit knapp osynlig från början som en säkerhetsgrej
@@ -94,7 +96,6 @@ submit.addEventListener('click', e =>{
             postnrInput.value,
             ortInput.value)
     ))
-    window.sessionStorage.setItem("products", products);
     window.document.location = "action-page.html";
 })
 
@@ -286,6 +287,7 @@ function subtraction(){
                 document.getElementsByClassName("cart")[index].remove();
                 document.querySelector('#remove').classList.add("hidden");
                 totprice.innerHTML = null;
+                document.getElementById("submit").classList.add('hidden');
                 localStorage.removeItem('products');
             }
         });
@@ -306,6 +308,7 @@ function removeProduct(){
                 document.getElementsByClassName("cart")[index].remove();
                 document.querySelector('#remove').classList.add("hidden");
                 totprice.innerHTML = null;
+                document.getElementById("submit").classList.add('hidden');
                 localStorage.removeItem('products');
             } else{
                 start();

@@ -89,7 +89,6 @@ submit.addEventListener('click', e =>{
             postnrInput.value,
             ortInput.value)
     ))
-    window.sessionStorage.setItem("products", products);
     window.document.location = "action-page.html";
 })
 
